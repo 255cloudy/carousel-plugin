@@ -1,28 +1,39 @@
-document.querySelectorAll('.carousel').forEach( carousel => {
-    const items = carousel.querySelectorAll('.carousel-item');
-    const buttonsHtml = Array.from(items, () => {
-        return ` <span class="carousel-button"></span>`
-    })
-    console.log(buttonsHtml);
-    carousel.insertAdjacentHTML('beforeend', 
-    `
-    <div class="carousel-nav">
-    ${ buttonsHtml.join('') }
-    </div>
-    `
-    );
-    buttons = carousel.querySelectorAll('.carousel-button');
-    buttons.forEach(( button, i) => {
-        button.addEventListener("click", () => {
-            items.forEach(item => {
-                item.classList.remove('carousel-item-selected');
-            })
-            buttons.forEach( button => button.classList.remove('carousel-button-selected'));
-            items[i].classList.add('carousel-item-selected')
-            buttons[i].classList.add('carousel-button-selected')
+carouselColors = ['red', 'black', 'green']
+class Carousel {
+    constructor(carouselNode) {
+        this.currItem = 0;
+        this.currTime = 0;
+        this.itemSelected = 'carousel-item-selected'
+        this.buttonSelected = 'carousel-button-selected'
+        this.carousel = carouselNode
+        this.items = this.carousel.querySelectorAll('.carousel-item');
+        this.btns = Array.from(this.items, () => {
+            const node = document.createElement('span')
+            node.classList.add('carousel-btn')
+            console.log(node)
+            return node
         })
-    })
-    items[0].classList.add('carousel-item-selected');
-    buttons[0].classList.add('carousel-button-selected');
-
+        console.log(this.btns)
+        let btnContainer = document.createElement('div')
+        btnContainer.classList.add('carousel-nav')
+        btnContainer.append(...this.btns)
+        this.carousel.append(btnContainer)
+        this.items[this.currItem].classList.add(this.itemSelected)
+        this.btns[this.currItem].classList.add(this.buttonSelected)
+        this.btns.forEach((btn, index) => {
+            console.log('setting listener')
+            btn.addEventListener('click',()=> {
+                this.updateCarousel(index)
+            })})
+    }
+    updateCarousel(index){
+        this.items[this.currItem].classList.remove(this.itemSelected)
+        this.btns[this.currItem].classList.remove(this.buttonSelected)
+        this.items[index].classList.add(this.itemSelected)
+        this.btns[index].classList.add(this.buttonSelected)
+        this.currItem = index
+    }
+}
+document.querySelectorAll('.carousel').forEach( carousel => {
+    let carouselObj  = new Carousel(carousel);
 })
