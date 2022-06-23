@@ -23,7 +23,7 @@ class Carousel {
         this.btns.forEach((btn, index) => {
             console.log('setting listener')
             btn.addEventListener('click',()=> {
-                this.updateCarousel(index)
+                this.imageFade(index)
             })})
     }
     updateCarousel(index){
@@ -32,6 +32,34 @@ class Carousel {
         this.items[index].classList.add(this.itemSelected)
         this.btns[index].classList.add(this.buttonSelected)
         this.currItem = index
+    }
+    fadeAnimation(index){
+        let fadeIn = [
+            {background: 'red'},
+            // {opacity: 1}
+        ]
+        let fadeInTiming = {
+            fill: 'forwards',
+            duration: 3000,
+            iterations: 1,
+        }
+        console.log(this.items[index])
+        this.items[index].animate(fadeIn, fadeInTiming)
+        this.updateCarousel(index)
+    }
+    imageFade(index){
+        let fadeIn = [
+            {opacity: 0.3},
+            {opacity: 1}
+        ]
+        let fadeInTiming = {
+            fill: 'forwards',
+            duration: 3000,
+            iterations: 1,
+        }
+        // console.log(this.items[index].querySelector('.carousel-image'))
+        this.items[index].querySelector('.carousel-image').animate(fadeIn, fadeInTiming)
+        this.updateCarousel(index)
     }
 }
 document.querySelectorAll('.carousel').forEach( carousel => {

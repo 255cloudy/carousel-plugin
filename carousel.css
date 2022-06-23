@@ -25,7 +25,7 @@
     text-align: center;
 
 }
-.carousel-button {
+.carousel-btn {
     width: 10px;
     height: 10px;
     display: inline-block;
@@ -36,4 +36,8 @@
 }
 .carousel-button-selected {
     background-color: rgba(255, 255, 255, 0.6);
+}
+.carousel-image {
+    width: 80%;
+    height: 200px;
 }
